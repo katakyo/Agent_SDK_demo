@@ -2,8 +2,11 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# 必要なパッケージをインストール
-RUN pip install --no-cache-dir python-dotenv==1.0.0 openai>=1.66.0 openai-agents streamlit
+# requirements.txtをコピー
+COPY requirements.txt .
+
+# 必要なパッケージをrequirements.txtからインストール
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 

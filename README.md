@@ -16,6 +16,7 @@ OpenAI Agents SDKを使用して、GPT-4やGPT-3.5-turboモデルを活用した
   - 指示（プロンプト）の編集
   - モデルの選択（GPT-3.5-turbo、GPT-4など）
   - 複数のエージェントプリセット
+- ホットリロード対応の開発環境
 
 ## セットアップ方法
 
@@ -35,7 +36,11 @@ OPENAI_API_KEY=your_api_key_here
 2. Docker Composeでアプリケーションを起動します：
 
 ```bash
+# 初回または依存関係が変更された場合に使用
 docker-compose up --build
+
+# 2回目以降はシンプルに以下を実行（ビルドをスキップ）
+docker-compose up
 ```
 
 3. ブラウザで以下のURLにアクセスしてStreamlit UIを開きます：
@@ -43,6 +48,12 @@ docker-compose up --build
 ```
 http://localhost:8501
 ```
+
+### 開発効率向上のポイント
+
+- `docker-compose up` コマンドはコードの変更をホットリロードします（Streamlitのライブリロード機能）
+- 依存パッケージは `requirements.txt` で管理されており、変更がない限りDockerビルドがキャッシュされます
+- コード変更時は自動的に反映されるため、コンテナの再起動は不要です
 
 ## プロジェクト構成
 
@@ -52,6 +63,7 @@ http://localhost:8501
 ├── README.md           # プロジェクト説明（このファイル）
 ├── app.py              # Streamlit UIアプリケーション
 ├── docker-compose.yml  # Docker Compose設定
+├── requirements.txt    # 必要なPythonパッケージリスト
 ├── .env                # 環境変数設定（APIキーなど）
 └── main.py             # コマンドライン用のサンプルスクリプト
 ```
